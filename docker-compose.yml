@@ -1,0 +1,32 @@
+version: '2.1'
+
+networks:
+  apache-net:
+    driver: bridge
+  nginx-net:
+    driver: bridge
+
+services:
+
+  apache2:
+    image: my_apache:v1.1
+    container_name: apache2
+    volumes:
+      - ./docker_volume:/var/www/html/
+    restart: always
+    ports:
+      - "80:80"
+    networks:
+      - apache-net
+
+  nginx:
+    image: my_nginx:v1.1
+    container_name: nginx
+    volumes:
+      - ./docker_volume:/default_config 
+    restart: always
+    ports:
+        - "8080:8080"
+    networks:
+        - nginx-net
+...
